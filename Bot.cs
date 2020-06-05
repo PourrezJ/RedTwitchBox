@@ -45,13 +45,13 @@ namespace RedTwitchBox
 
         private void Client_OnConnected(object sender, OnConnectedArgs e)
         {
-            Console.WriteLine($"Connected to {e.AutoJoinChannel}");
+           // Console.WriteLine($"Connected to {e.AutoJoinChannel}");
         }
 
         private void Client_OnJoinedChannel(object sender, OnJoinedChannelArgs e)
         {
-            Console.WriteLine("Hey guys! I am a bot connected via TwitchLib!");
-            client.SendMessage(e.Channel, "Hey guys! I am a bot connected via TwitchLib!");
+            //Console.WriteLine("Hey guys! I am a bot connected via TwitchLib!");
+            //client.SendMessage(e.Channel, "Hey guys! I am a bot connected via TwitchLib!");
         }
 
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
@@ -92,24 +92,25 @@ namespace RedTwitchBox
                 if (Program.Settings.CheckIfCommandExist(message))
                 {
                     var command = Program.Settings.GetCommand(message);
-
-                    client.SendMessage(e.ChatMessage.Channel, command.response);
+                    if (command != null)
+                        client.SendMessage(e.ChatMessage.Channel, command.response);
                 }
             }
         }
 
         private void Client_OnWhisperReceived(object sender, OnWhisperReceivedArgs e)
         {
-            if (e.WhisperMessage.Username == "my_friend")
-                client.SendWhisper(e.WhisperMessage.Username, "Hey! Whispers are so cool!!");
+            //if (e.WhisperMessage.Username == "my_friend")
+                //client.SendWhisper(e.WhisperMessage.Username, "Hey! Whispers are so cool!!");
         }
 
         private void Client_OnNewSubscriber(object sender, OnNewSubscriberArgs e)
         {
+            /*
             if (e.Subscriber.SubscriptionPlan == SubscriptionPlan.Prime)
                 client.SendMessage(e.Channel, $"Welcome {e.Subscriber.DisplayName} to the substers! You just earned 500 points! So kind of you to use your Twitch Prime on this channel!");
             else
-                client.SendMessage(e.Channel, $"Welcome {e.Subscriber.DisplayName} to the substers! You just earned 500 points!");
+                client.SendMessage(e.Channel, $"Welcome {e.Subscriber.DisplayName} to the substers! You just earned 500 points!");*/
         }
     }
 }
