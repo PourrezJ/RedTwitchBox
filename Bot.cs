@@ -15,9 +15,9 @@ namespace RedTwitchBox
     {
         TwitchClient client;
 
-        public Bot()
+        public Bot(string channelName, string token)
         {
-            ConnectionCredentials credentials = new ConnectionCredentials("djoe45", "access_token");
+            ConnectionCredentials credentials = new ConnectionCredentials(channelName, token);
             var clientOptions = new ClientOptions
             {
                 MessagesAllowedInPeriod = 750,
