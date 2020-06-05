@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TwitchLib.Client;
 using TwitchLib.Client.Enums;
@@ -55,8 +56,25 @@ namespace RedTwitchBox
 
         private void Client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
-            if (e.ChatMessage.Message.Contains("badword"))
-                client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromMinutes(30), "Bad word! 30 minute timeout!");
+            //if (e.ChatMessage.Message.Contains("badword"))
+                //client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromMinutes(30), "Bad word! 30 minute timeout!");
+
+            string message = e.ChatMessage.Message;
+            if (message.Contains("!addcom"))
+            {
+                var split = message.Split(' ');
+
+                if (split.Length <= 2)
+                {
+                    client.SendWhisper(e.ChatMessage.Username, "Vous devez renseigner une commande valide.");
+                    return;
+                }
+
+                string commandName = split[1];
+                string response = split[2];
+
+
+            }
         }
 
         private void Client_OnWhisperReceived(object sender, OnWhisperReceivedArgs e)

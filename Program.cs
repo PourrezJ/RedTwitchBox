@@ -11,7 +11,7 @@ namespace RedTwitchBox
 
         public static Bot bot;
 
-        public static Settings settings;
+        public static Settings Settings;
 
         static void Main(string[] args)
         {
@@ -31,17 +31,17 @@ namespace RedTwitchBox
                 var accessToken = Console.ReadLine();
                 Console.WriteLine("Access Token is " + accessToken);
 
-                settings = new Settings(channelName, accessToken);
+                Settings = new Settings(channelName, accessToken);
 
-                var fileData = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                var fileData = JsonConvert.SerializeObject(Settings, Formatting.Indented);
                 File.WriteAllText(Path.Combine(ApplicationPath, "Settings.json"), fileData);
             }
             else
             {
-                settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Path.Combine(ApplicationPath, "Settings.json")));
+                Settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Path.Combine(ApplicationPath, "Settings.json")));
             }
 
-            bot = new Bot(settings.ChannelName, settings.AccessToken);
+            bot = new Bot(Settings.ChannelName, Settings.AccessToken);
 
             Console.ReadLine();
         }
