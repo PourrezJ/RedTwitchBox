@@ -6,8 +6,8 @@ namespace RedTwitchBox
 {
     public class BasicCommand
     {
-        string name;
-        string response;
+        public string name;
+        public string response;
 
         public static void AddBasicCommand(string name, string response)
         {
@@ -18,6 +18,7 @@ namespace RedTwitchBox
             };
 
             Program.Settings.Commands.Add(command);
+            Program.Settings.Save();
         }
     }
 }

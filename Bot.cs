@@ -60,20 +60,41 @@ namespace RedTwitchBox
                 //client.TimeoutUser(e.ChatMessage.Channel, e.ChatMessage.Username, TimeSpan.FromMinutes(30), "Bad word! 30 minute timeout!");
 
             string message = e.ChatMessage.Message;
-            if (message.Contains("!addcom"))
-            {
-                var split = message.Split(' ');
 
-                if (split.Length <= 2)
+            if (message.Contains("!"))
+            {
+                if (message.Contains("!addcom"))
                 {
-                    client.SendWhisper(e.ChatMessage.Username, "Vous devez renseigner une commande valide.");
-                    return;
+                    var split = message.Split(' ');
+
+                    if (split.Length <= 2)
+                    {
+                        client.SendWhisper(e.ChatMessage.Username, "Vous devez renseigner une commande valide.");
+                        return;
+                    }
+
+                    string commandName = split[1];
+                    string response = split[2];
+
+                    if (commandName[0] != '!')
+                    {
+                        commandName = "!" + commandName;
+                        return;
+                    }
+
+                    if (!Program.Settings.CheckIfCommandExist(commandName))
+                    {
+                        BasicCommand.AddBasicCommand(commandName, response);
+                        client.SendWhisper(e.ChatMessage.Username, "Commande " + commandName + " est ajouté");
+                    }
                 }
 
-                string commandName = split[1];
-                string response = split[2];
+                if (Program.Settings.CheckIfCommandExist(message))
+                {
+                    var command = Program.Settings.GetCommand(message);
 
-
+                    client.SendMessage(e.ChatMessage.Channel, command.response);
+                }
             }
         }
 

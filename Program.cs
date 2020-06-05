@@ -32,9 +32,7 @@ namespace RedTwitchBox
                 Console.WriteLine("Access Token is " + accessToken);
 
                 Settings = new Settings(channelName, accessToken);
-
-                var fileData = JsonConvert.SerializeObject(Settings, Formatting.Indented);
-                File.WriteAllText(Path.Combine(ApplicationPath, "Settings.json"), fileData);
+                Settings.Save();
             }
             else
             {
